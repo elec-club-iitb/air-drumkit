@@ -26,6 +26,12 @@ class AudioButton(Button):
         self.sound.volume = self.volume
         self.sound.play()
 
+        self.state = 'down'
+        Clock.schedule_once(self.reset_state, 300)
+
+    def reset_state(self):
+        self.state = 'up'
+
     def release_audio(self):
         if self.sound:
             self.sound.stop()
@@ -80,7 +86,6 @@ class AudioApp(App):
             i = ord(c) - 48
             if i < 6:
                 self.sound_buttons[i].on_press()
-                self.sound_buttons[i].state = 'down'
         Clock.schedule_once(self.read_from_serial)
 
 if __name__ == '__main__':
